@@ -11,4 +11,5 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     @Query("SELECT d FROM Department d WHERE d.name = :name AND d.id = :id")
     Department findByIdAndName(@Param("id") Long id, @Param("name") String name);
+
 }

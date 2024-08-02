@@ -4,6 +4,7 @@ import com.Lauretta.employee_management_system.dto.DepartmentDto;
 import com.Lauretta.employee_management_system.service.DepartmentService;
 import com.Lauretta.employee_management_system.service.GenericService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,12 @@ public class DepartmentController {
     @DeleteMapping("/{id}")
     public void deleteDepartment(@PathVariable Long id) {
         departmentService.delete(id);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<DepartmentDto> getDepartmentByIdAndName(@RequestParam Long id, @RequestParam String name) {
+        DepartmentDto department = depService.findByIdAndName(id, name);
+        return ResponseEntity.ok(department);
     }
 
 

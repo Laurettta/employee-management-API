@@ -111,6 +111,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-
-
+    @Override
+    @Transactional(readOnly = true)
+    public Department getDepartmentByEmployeeName(String name) {
+        return null;
+    }
 }
+

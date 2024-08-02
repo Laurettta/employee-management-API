@@ -1,5 +1,6 @@
 package com.Lauretta.employee_management_system.controller;
 
+import com.Lauretta.employee_management_system.dto.DepartmentDto;
 import com.Lauretta.employee_management_system.dto.EmployeeDto;
 import com.Lauretta.employee_management_system.entity.Department;
 import com.Lauretta.employee_management_system.service.EmployeeService;
@@ -43,5 +44,18 @@ public class EmployeeController {
         employeeService.delete(id);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<EmployeeDto>> searchEmployees(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long departmentId,
+            @RequestParam(required = false) Long roleId) {
+        List<EmployeeDto> employees = employeeService.searchEmployees(name, departmentId, roleId);
+        return ResponseEntity.ok(employees);
+    }
 
+
+    @GetMapping("/getDepByEmpName")
+    public Department getDepartmentByEmployeeName(@RequestParam String name) {
+        return employeeService.getDepartmentByEmployeeName(name);
+    }
 }

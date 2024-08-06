@@ -1,20 +1,18 @@
 package com.Lauretta.employee_management_system.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
-
+@Getter
+@Setter
 @AllArgsConstructor
 @Builder
 @Entity
-@Data
 @NoArgsConstructor
 @Table(name = "EMPLOYEE")
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +21,6 @@ public class Employee {
     private String email;
     private String password;
 
-
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
@@ -31,4 +28,7 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    private BigDecimal salary;
+
 }

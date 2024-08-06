@@ -9,11 +9,11 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
 
-    RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
+    RoleMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(RoleMapper.class);
 
     RoleDto toDto(Role role);
 
-    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "id", ignore = true)
     Role toEntity(RoleDto roleDTO);
 
     void updateFromDto(RoleDto roleDTO, @MappingTarget Role role);

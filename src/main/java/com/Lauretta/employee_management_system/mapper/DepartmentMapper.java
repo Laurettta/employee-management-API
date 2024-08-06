@@ -10,9 +10,9 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface DepartmentMapper {
 
-    DepartmentMapper INSTANCE = Mappers.getMapper(DepartmentMapper.class);
+    DepartmentMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(DepartmentMapper.class);
 
-    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "id", ignore = true)
     Department toEntity(DepartmentDto departmentDTO);
 
     DepartmentDto toDto(Department department);

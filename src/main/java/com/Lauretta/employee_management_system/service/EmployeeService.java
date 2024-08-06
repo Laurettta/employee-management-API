@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface EmployeeService extends GenericService<EmployeeDto, Long>{
 
+    void checkDuplicateEmployee(String name, String surname);
+
     List<EmployeeDto> searchEmployees(String name, Long departmentId, Long roleId);
 }

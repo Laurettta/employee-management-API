@@ -4,6 +4,7 @@ import com.Lauretta.employee_management_system.dto.EmployeeDto;
 import com.Lauretta.employee_management_system.entity.Department;
 import com.Lauretta.employee_management_system.entity.Employee;
 import com.Lauretta.employee_management_system.entity.Role;
+import com.Lauretta.employee_management_system.exception.DuplicateEmployeeException;
 import com.Lauretta.employee_management_system.exception.RecordNotFoundException;
 import com.Lauretta.employee_management_system.mapper.EmployeeMapper;
 import com.Lauretta.employee_management_system.repository.DepartmentRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +29,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
     private final RoleRepository roleRepository;
     private final EmployeeMapper employeeMapper;
+
+
+    @Override
+    public void checkDuplicateEmployee(String name, String surname) {
+        Optional<Employee> existingEmployee = employeeRepository.findByNameAndSurname(name, surname);
+        if (existingEmployee.isPresent()) {
+            throw new DuplicateEmployeeException("An employee with the same first name and last name already exists. Please add a patronymic.");
+        }
+    }
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {

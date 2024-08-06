@@ -6,10 +6,10 @@ import com.Lauretta.employee_management_system.entity.Role;
 import com.Lauretta.employee_management_system.repository.DepartmentRepository;
 import com.Lauretta.employee_management_system.repository.EmployeeRepository;
 import com.Lauretta.employee_management_system.repository.RoleRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
 @Component

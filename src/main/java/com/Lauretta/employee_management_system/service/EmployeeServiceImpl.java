@@ -4,17 +4,21 @@ import com.Lauretta.employee_management_system.dto.EmployeeDto;
 import com.Lauretta.employee_management_system.entity.Department;
 import com.Lauretta.employee_management_system.entity.Employee;
 import com.Lauretta.employee_management_system.entity.Role;
+import com.Lauretta.employee_management_system.entity.SalaryAccount;
 import com.Lauretta.employee_management_system.exception.DuplicateEmployeeException;
 import com.Lauretta.employee_management_system.exception.RecordNotFoundException;
 import com.Lauretta.employee_management_system.mapper.EmployeeMapper;
 import com.Lauretta.employee_management_system.repository.DepartmentRepository;
 import com.Lauretta.employee_management_system.repository.EmployeeRepository;
 import com.Lauretta.employee_management_system.repository.RoleRepository;
+import com.Lauretta.employee_management_system.repository.SalaryAccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
     private final RoleRepository roleRepository;
     private final EmployeeMapper employeeMapper;
+    private final SalaryAccountRepository salaryAccountRepository;
 
 
     @Override
@@ -119,6 +124,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         log.info("Returning all employees");
         return getAll();
+    }
+
+
+    @Override
+    @Transactional
+    public void creditSalariesToDepartment(Long departmentId, BigDecimal amount) {
+        log.info("Crediting salaries to all employees in department with id: {}", departmentId);
+        List<Employee> employees = employeeRepository.findByDepartmentId(departmentId);
+
+        for (Employee employee : employees) {
+            SalaryAccount salaryAccount = new SalaryAccount();
+            salaryAccount.setAmount(amount);
+            salaryAccount.setEnrollmentDate(LocalDate.now());
+            salaryAccount.setEmployee(employee);
+
+            salaryAccountRepository.save(salaryAccount);
+            log.info("Credited {} to employee with id: {}", amount, employee.getId());
+        }
     }
 
 

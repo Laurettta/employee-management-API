@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,6 +22,9 @@ public class Employee {
     private String surname;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<SalaryAccount> salaryAccounts;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
